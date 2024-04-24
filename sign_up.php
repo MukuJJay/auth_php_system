@@ -11,6 +11,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        die("<h2 class='font-bold text-red-950'>Invalid email!</h2>");
+    }
+
     if ($password !== $confirmPassword) {
         echo "<h2 class='font-bold text-red-950'>Password mismatch!</h2>";
         exit;

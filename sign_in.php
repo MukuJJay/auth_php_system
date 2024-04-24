@@ -11,6 +11,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("<h2 class='font-bold text-red-950'>Missing fields!</h2>");
     }
 
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        die("<h2 class='font-bold text-red-950'>Invalid email!</h2>");
+    }
+
     $isEmailExists = $conn->execute_query("SELECT * FROM users where email=?", [$email]);
 
     if ($isEmailExists->num_rows === 0) {
@@ -118,7 +122,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         const processRequest = function () {
             const xhr = new XMLHttpRequest();
-            xhr.redirectPolicy = 'manual';
 
             const formData = new FormData(signInForm);
             xhr.open("POST", "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>", true);
